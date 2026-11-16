@@ -108,17 +108,24 @@ PhishGuard-Mail-Scanner/
 
 ## Requirements
 
-- **Python 3.9+** (tested in this environment with Python 3.15)
-- **Tkinter** for GUI (bundled with most standard Python installs on Windows/macOS; on some Linux distros install `python3-tk`)
-- **No third-party packages required** for the core scanner/GUI/CLI/ML module (stdlib-first)
+- **Python 3.9+**
+- **No third-party packages required** for core scanner/Web UI/CLI/embedded ML (stdlib-first)
+- **Tkinter** only needed for the **desktop GUI** (`python main.py` / `gui.py`):
+  - **Windows/macOS:** usually bundled with standard Python installs
+  - **Linux:** install the Tk package if missing (examples: Debian/Ubuntu `sudo apt install python3-tk`, Fedora `sudo dnf install python3-tkinter`, Arch `sudo pacman -S tk`)
+- **Web UI:** works in any modern browser (local server; no Node/npm required to run)
+
+> **Command note:** use `python` on Windows (or `py -3` if configured). On Linux/macOS, use `python3` if `python` is not mapped to Python 3.
 
 ## Quick start
 
-### Run the Web UI (recommended, includes in-app “How to use / Help”)
+### 1) Run the Web UI (recommended, includes in-app “How to use / Help”)
 
+#### Windows (PowerShell or Command Prompt)
 ```powershell
 cd "$HOME\Downloads\PhishGuard-Mail-Scanner"
-# One-click (Windows)
+
+# One-click (auto-opens browser)
 .\run.bat
 
 # Or
@@ -129,56 +136,114 @@ python server.py
 python main.py --server
 ```
 
-Open **http://127.0.0.1:8080/**. Use the **❓ Help / “How to use / Help”** panel for the Gmail “Show original” workflow, features, shortcuts, and safety notes.
+#### Linux / macOS (bash)
+```bash
+cd ~/Downloads/PhishGuard-Mail-Scanner
 
-### Run the desktop GUI
+# Recommended (auto-opens browser)
+python3 run.py
 
-```powershell
-python main.py
+# Or
+python3 server.py
+# or
+python3 main.py --server
+
+# Optional: make launcher executable once
+# chmod +x run.py && ./run.py
 ```
 
-(or `python gui.py`)
+**Then open:** [http://127.0.0.1:8080/](http://127.0.0.1:8080/) (if it doesn’t open automatically).  
+Use the **❓ Help / “How to use / Help”** panel for the Gmail “Show original” workflow, features, shortcuts, and safety notes.
 
-### Scan a file (CLI)
+**Useful options:**
+```bash
+python3 run.py --host 127.0.0.1 --port 8080
+python3 run.py --no-browser
+```
+(Use `python` instead of `python3` on Windows.)
 
+### 2) Run the desktop GUI (Tkinter)
+
+#### Windows
+```powershell
+python main.py
+# or
+python gui.py
+```
+
+#### Linux / macOS
+```bash
+python3 main.py
+# or
+python3 gui.py
+```
+
+### 3) CLI usage
+
+#### Scan a file
+
+**Windows (PowerShell):**
 ```powershell
 python cli.py --file samples\phishing_with_auth_fail.eml
 python cli.py --file samples\linkedin_job_alert_show_original.eml --use-default-whitelist
 ```
 
-### Scan from clipboard/stdin or raw text
+**Linux / macOS (bash):**
+```bash
+python3 cli.py --file samples/phishing_with_auth_fail.eml
+python3 cli.py --file samples/linkedin_job_alert_show_original.eml --use-default-whitelist
+```
 
+#### Scan from stdin or raw text
+
+**Windows (PowerShell):**
 ```powershell
 Get-Content email.eml -Raw | python cli.py --stdin --use-default-whitelist
 python cli.py --text "Urgent: verify your account now at http://192.168.1.10/login"
 ```
 
-### Export reports
+**Linux / macOS (bash):**
+```bash
+cat email.eml | python3 cli.py --stdin --use-default-whitelist
+python3 cli.py --text "Urgent: verify your account now at http://192.168.1.10/login"
+```
 
+#### Export reports
+
+**Windows (PowerShell):**
 ```powershell
 python cli.py --file samples\phishing_with_auth_fail.eml --json report.json --html report.html
 python cli.py --file samples\phishing_with_auth_fail.eml --case case.json --no-ml
 ```
 
-### CVSS v3.1 calculator (offline utility)
-
-```powershell
-python cli.py --cvss-vector "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+**Linux / macOS (bash):**
+```bash
+python3 cli.py --file samples/phishing_with_auth_fail.eml --json report.json --html report.html
+python3 cli.py --file samples/phishing_with_auth_fail.eml --case case.json --no-ml
 ```
 
-### Batch scan a folder (parallel/multi-core)
+#### CVSS v3.1 calculator (offline utility)
 
-```powershell
+```bash
+python3 cli.py --cvss-vector "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+```
+(Use `python` on Windows.)
+
+#### Batch scan a folder (parallel/multi-core)
+
+```bash
 # --jobs 0 = auto, --jobs 1 = sequential, --jobs N = N parallel workers
-python cli.py --dir samples --json batch_report.json --html batch_report.html --case-dir cases --jobs 0
+python3 cli.py --dir samples --json batch_report.json --html batch_report.html --case-dir cases --jobs 0
 ```
+(Use `python` on Windows.)
 
-### Whitelist options
+#### Whitelist options
 
-```powershell
-python cli.py --file samples\phishing_with_auth_fail.eml --whitelist whitelist.json
-python cli.py --file samples\phishing_with_auth_fail.eml --use-default-whitelist
+```bash
+python3 cli.py --file samples/phishing_with_auth_fail.eml --whitelist whitelist.json
+python3 cli.py --file samples/phishing_with_auth_fail.eml --use-default-whitelist
 ```
+(Use `python` on Windows; path separators shown as `/` work on Linux/macOS.)
 
 ## How it works (high level)
 

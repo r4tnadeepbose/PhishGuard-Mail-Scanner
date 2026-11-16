@@ -1,0 +1,166 @@
+Delivered-To: ratnadeepbusiness321@gmail.com
+Received: by 2002:a05:7011:4450:10b0:56d:b86b:5551 with SMTP id wu16-n1csp2614358mdb; Mon, 16 Nov 2026 06:15:50 -0800 (PST)
+X-Received: by 2002:a05:701b:20ce:20b0:1b5:481:ff0f with SMTP id a92af1059eb24-1b504821d4emr9774188c88.32.1794838550389; Mon, 16 Nov 2026 06:15:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794838550; cv=none; d=google.com; s=arc-20260327; b=F2g/WrDDNdXzeML2unNMwbRb4rEk0eA/wzkxUX7FKXwrchIcOLFl7xgi2SmXsxIPx7 Ik3HHvXf4mdgFox7IoqO8gOeMVtHxrS7pFhkLpqU6xORcC6eRcvxfajSyk0oL/OJKa9S 42z6qHCNl5zKmc7Qva+i7zvT71622hlSMvgdHKaNiaCFeLsCeD2VOp9deULPd8qF0nHO U5VBKwuxZctxZQEfVxnz3HIR3Nf3sYxp43BnVtFvlQcSx8nkpHVvscJz8r96a+/w9M97 Mmyzylzt6OeghCAzZcdB+IxCB8X+wheRr9xkI88km17XsVLM1Ns0kRqKBhAsSciNAAiS nDzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327; h=require-recipient-valid-since:feedback-id:list-unsubscribe-post :list-unsubscribe:to:mime-version:subject:message-id:from:date :dkim-signature:dkim-signature; bh=ycWCz8MViux/ROUNK9tnmgVhO6zSarA0tyLM2B2SGDk=; fh=HcTVFI5h/aR50NNlWn6LFc6BuSymgLInBPzJkaciwag=; b=nuLuX6rYEUkrK9mNU7OgtRppds8RaFJPFll7hDUNx5LcMVU1w6Hy5WVX8t4kJR2GN9 /kmXOtHt5+i65n/IzrZC1YiTmEYKWg/oQ516lZ3xve+Vm+rAkmssw0LRhcHvrcwoMQDb 0tf8Dh1FUfKNq/hb5r1RY9sxwxM7zgTFykHt6QO3CVFjLRuVZzq3JjbUurbFMWf1+gmg 9SQGn8A1V7dfyR1lTjkIa3kWzp+tFagJ9kvBRhqzWupEVjgEVlmPjxihH8eDwEIazfNu lqS7DF1bKumblCRaUuL8NotZQ9R0HzE9EHl56buVjurYzzigqrRXzcTI1sCbHGUy/nI5 M6bw==; dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass header.i=@maild.linkedin.com header.s=d2048-202308-0d header.b=AkKVaQqh; dkim=pass header.i=@linkedin.com header.s=d2048-202308-00 header.b=CeeShiOZ; spf=pass (google.com: domain of s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com designates 108.174.0.179 as permitted sender) smtp.mailfrom=s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com; dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+Return-Path: <s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com>
+Received: from maild-gc.linkedin.com (maild-gc.linkedin.com. [108.174.0.179]) by mx.google.com with ESMTPS id a92af1059eb24-1b503219f7dsi29337905c88.54.2026.11.16.06.15.49 for <ratnadeepbusiness321@gmail.com> (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256); Mon, 16 Nov 2026 06:15:50 -0800 (PST)
+Received-SPF: pass (google.com: domain of s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com designates 108.174.0.179 as permitted sender) client-ip=108.174.0.179;
+Authentication-Results: mx.google.com; dkim=pass header.i=@maild.linkedin.com header.s=d2048-202308-0d header.b=AkKVaQqh; dkim=pass header.i=@linkedin.com header.s=d2048-202308-00 header.b=CeeShiOZ; spf=pass (google.com: domain of s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com designates 108.174.0.179 as permitted sender) smtp.mailfrom=s-2izmy90t6d4jd2j6sxnrxg2asseqhra6e8ic8rpwowyqpov1jv0w992r@bounce.linkedin.com; dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maild.linkedin.com; s=d2048-202308-0d; h=list-unsubscribe-post:list-unsubscribe:x-linkedin-fbl:x-linkedin-template: x-linkedin-class:to:content-type:mime-version:subject:message-id:from:date: from; bh=ycWCz8MViux/ROUNK9tnmgVhO6zSarA0tyLM2B2SGDk=; b=AkKVaQqhUmnK2cEU6e7vFYqir+wLyVxQP1c6pf+3RMsxhnHlIwCHDzuIeAS6VTxls7bkXOLrYUpu9 Dj5VBe4uIdNWTxOyypxwGLj8ya1xM2avJ7OntRqUhKNIFA1d+gj/dR+6lktakhC06iutzlS+MoT7O2 uMI3iRPVgBFyenTzAExkKluS23M3Dya+5QSjc8VBDMcgjEVvLt/0JgTFs6lx5fWN/mW0FAzDzRJUMA 6e7Y1RE8C42u5m0/mVkdwwi4m+kZQmMkjapPRaWQYzbuk4UMbtlDgbGgqHT1miqiFpl8IosFxytdxU boNEDR9vCcET0jQOHdpEqxHQjcAZsPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linkedin.com; s=d2048-202308-00; h=list-unsubscribe-post:list-unsubscribe:x-linkedin-fbl:x-linkedin-template: x-linkedin-class:to:content-type:mime-version:subject:message-id:from:date: from; bh=ycWCz8MViux/ROUNK9tnmgVhO6zSarA0tyLM2B2SGDk=; b=CeeShiOZeVomCQiFI7TGKQelyWTP7o6cs2lpN842PVsPSRplnr4zs0ODKpqMWQns6gO/mf2mGfWsC 8CXIq48XLteUVZkih73FDSbyb9HzUXvp87rKDwfv034Dp7veWDnfYtQEblQDL0hI5gl//MmdT1PpWV tXd1Kt85UxnLgtbptqwSD0aaulQS4eapdt4zxYQSyfrru7UgLeemxBVvMR1hGzsD2t8IB33yb8qrDZ wDFnEKhMUbEa5qJHCFuczUBBHkTj2Zdjcb0FzxvkT95r/X9a88flzPlFArYpeP+siHwt5mps9hsWuI umKPzHTgYVp0NduEswu2rl1/e9UbNsw==
+Date: Mon, 16 Nov 2026 14:15:49 +0000 (GMT)
+From: LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>
+Message-ID: <581271224.15803990.1794838549912@lor1-app152540.prod.linkedin.com>
+Subject: Tata Consultancy Services Security Analyst and 39 other jobs you may be interested in
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_Part_15803986_551485387.1794838549910"
+To: Ratnadeep Bose <ratnadeepbusiness321@gmail.com>
+X-LinkedIn-Class: SAVEDSEARCH
+X-LinkedIn-Template: email_job_alert_digest_01
+X-LinkedIn-fbl: m2-clvfi96a1vjdhlklejrer0wy1uyjhcms79172uyfcevmeztjsmq86t9kv1j3geaodaz2mwj3aez1ngihg3zx02jgs1ko2449xv9bvapn2l42sze6l06cp1zserrpf12bs0hu0t3o
+X-LinkedIn-Id: q3t5u0-mwjcj1uh-bh
+List-Unsubscribe: <https://www.linkedin.com/job-alert-email-unsubscribe?savedSearchId=15465675860&lipi=urn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D%3D&midToken=AQEn2W79Fr7h4w&midSig=11IW8d9BtTsYw1&ek=email_job_alert_digest_01&e=q3t5u0-mwjcj1uh-bh&eid=q3t5u0-mwjcj1uh-bh&m=unsub&ts=unsub&li=0&t=plh>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: email_job_alert_digest_01:linkedin
+Require-Recipient-Valid-Since: ratnadeepbusiness321@gmail.com; Sun, 15 Feb 2026 06:33:34 +0000
+
+------=_Part_15803986_551485387.1794838549910
+Content-Type: text/plain;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: text-body
+
+Your job alert for Cyber Security Specialist in India           =20
+Security Analyst
+Tata Consultancy Services
+Bengaluru
+
+12 connections
+Apply with resume & profile
+View job: https://www.linkedin.com/comm/jobs/view/4490250105/?trackingId=3D=
+HZwi1vMtw8Dhtomimkv8iw%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3Dur=
+n%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D=
+%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job_a=
+lert_digest_01-primary_job_list-0-jobcard_body_text_0_jobid_4490250105_ssid=
+_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert_d=
+igest_01-primary_job_list-0-jobcard_body_text_0_jobid_4490250105_ssid_15465=
+675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&eid=
+=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1Mz=
+hmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1Z=
+TY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmRi=
+YTgsMiwx
+
+---------------------------------------------------------
+ =20
+           =20
+Vulnerability Management Engineer
+Workstreet
+India
+View job: https://www.linkedin.com/comm/jobs/view/4489710346/?trackingId=3D=
+q8qzdr98D%2Fdyef6y2Szcxw%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3D=
+urn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%=
+3D%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job=
+_alert_digest_01-primary_job_list-0-jobcard_body_text_1_jobid_4489710346_ss=
+id_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert=
+_digest_01-primary_job_list-0-jobcard_body_text_1_jobid_4489710346_ssid_154=
+65675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&ei=
+d=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1M=
+zhmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1=
+ZTY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmR=
+iYTgsMiwx
+
+---------------------------------------------------------
+ =20
+           =20
+AI Cybersecurity Specialist (Red Team)
+J&W Nexus
+India
+Apply with resume & profile
+View job: https://www.linkedin.com/comm/jobs/view/4490208358/?trackingId=3D=
+cMYdNHyZWPzNrRfLkKPvMg%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3Dur=
+n%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D=
+%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job_a=
+lert_digest_01-primary_job_list-0-jobcard_body_text_2_jobid_4490208358_ssid=
+_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert_d=
+igest_01-primary_job_list-0-jobcard_body_text_2_jobid_4490208358_ssid_15465=
+675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&eid=
+=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1Mz=
+hmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1Z=
+TY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmRi=
+YTgsMiwx
+
+---------------------------------------------------------
+ =20
+           =20
+CYBER SECURITY ANALYST L4
+Wipro
+Bengaluru
+
+4 connections
+View job: https://www.linkedin.com/comm/jobs/view/4491278267/?trackingId=3D=
+0TiSXzA%2BGilm6NxxglDl9A%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3D=
+urn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%=
+3D%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job=
+_alert_digest_01-primary_job_list-0-jobcard_body_text_3_jobid_4491278267_ss=
+id_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert=
+_digest_01-primary_job_list-0-jobcard_body_text_3_jobid_4491278267_ssid_154=
+65675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&ei=
+d=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1M=
+zhmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1=
+ZTY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmR=
+iYTgsMiwx
+
+---------------------------------------------------------
+ =20
+           =20
+Staff Security Engineer, AI Security
+PayPal
+Bengaluru
+
+This company is actively hiring
+View job: https://www.linkedin.com/comm/jobs/view/4466057769/?trackingId=3D=
+suzB4bF8Z3iDnJYDYE9aSA%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3Dur=
+n%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D=
+%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job_a=
+lert_digest_01-primary_job_list-0-jobcard_body_text_4_jobid_4466057769_ssid=
+_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert_d=
+igest_01-primary_job_list-0-jobcard_body_text_4_jobid_4466057769_ssid_15465=
+675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&eid=
+=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1Mz=
+hmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1Z=
+TY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmRi=
+YTgsMiwx
+
+---------------------------------------------------------
+ =20
+           =20
+Information Security Engineer
+MoonPay
+Bengaluru
+Apply with resume & profile
+View job: https://www.linkedin.com/comm/jobs/view/4466099958/?trackingId=3D=
+lkQlBWTdaw%2B0TjQ8UvI5RA%3D%3D&refId=3D1acYlTr9jO0WCyrPyhgwiQ%3D%3D&lipi=3D=
+urn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%=
+3D%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job=
+_alert_digest_01-primary_job_list-0-jobcard_body_text_5_jobid_4466099958_ss=
+id_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert=
+_digest_01-primary_job_list-0-jobcard_body_text_5_jobid_4466099958_ssid_154=
+65675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&ei=
+d=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1M=
+zhmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1=
+ZTY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmR=
+iYTgsMiwx
+
+---------------------------------------------------------
+ =20
+See all jobs on LinkedIn:  https://www.linkedin.com/comm/jobs/search-results/?keywords=3DCyber+Security+Specialist&f_TPR=3Da1794702700-&geoId=3D102713980&origin=3DSEMANTIC_SEARCH_JOB_ALERT_EMAIL&originToLandingJobPostings=3D4490250105,4489710346,4490208358,4490233393,4491278267,4466057769&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job_alert_digest_01-primary_job_list-0-see_all_jobs_text_ssid_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert_digest_01-primary_job_list-0-see_all_jobs_text_ssid_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&eid=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1MzhmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1ZTY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmRiYTgsMiwx
+Manage your job alerts:  https://www.linkedin.com/comm/jobs/alerts?lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_digest_01%3B6ZItowdRRNqKU6Y5qzBHyA%3D%3D&midToken=3DAQEn2W79Fr7h4w&midSig=3D11IW8d9BtTsYw1&trk=3Deml-email_job_alert_digest_01-primary_job_list-0-manage_alerts_cta_text_ssid_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8&trkEmail=3Deml-email_job_alert_digest_01-primary_job_list-0-manage_alerts_cta_text_ssid_15465675860_fmid_q3t5u0~mwjcj1uh~bh_crv_8-null-q3t5u0~mwjcj1uh~bh-null-null&eid=3Dq3t5u0-mwjcj1uh-bh&otpToken=3DZjZhMGQ0MDJhNWUzNTY0MTIzOGI3ZDMzMmU1ZDM1MzhmOWEwODkzMjQwYjA5YTAxMTBlNjVmM2UyZDY0ODQxMDBjMGYxYzFiZWYwMjU5ODZkN2M4ZGU1ZTY0ODFiNzdmZDNhMjM4ZjZhZjVjMTg5NWQ0NzIxNjgzZWRkMThhYjhkZDg5ZGVjODdmMDk4YmRiYTgsMiwx
+
+------=_Part_15803986_551485387.1794838549910
+Content-Type: text/html;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: html-body
+
+<html><body><p>LinkedIn job alert (HTML part truncated in fixture for brevity).</p></body></html>
+------=_Part_15803986_551485387.1794838549910--

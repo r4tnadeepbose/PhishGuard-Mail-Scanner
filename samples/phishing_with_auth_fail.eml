@@ -1,0 +1,23 @@
+Return-Path: <bounce@malicious-relay.top>
+Received: from unknown (HELO mail.malicious-relay.top) (203.0.113.55)
+    by mx.victim.com with SMTP; Mon, 16 Nov 2026 10:21:58 +0000
+Received: from localhost (localhost [127.0.0.1])
+    by mail.malicious-relay.top; Mon, 16 Nov 2026 10:21:50 +0000
+Authentication-Results: mx.victim.com; spf=fail smtp.mailfrom=malicious-relay.top; dkim=none; dmarc=fail action=quarantine header.from=paypa1-secure.com
+From: "PayPal Security" <service@paypa1-secure.com>
+Reply-To: support@account-check.xyz
+To: victim@example.com
+Subject: Action required: confirm your account details now
+Date: Mon, 16 Nov 2026 10:22:11 +0000
+Message-ID: <fake-12345@paypa1-secure.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+Dear Customer,
+
+We noticed unusual activity. Please confirm your account details and password immediately:
+https://paypa1-secure.com.login.verify-user.top/signin
+
+Failure to respond within 2 hours will result in account limitation.
+
+PayPal Security Team

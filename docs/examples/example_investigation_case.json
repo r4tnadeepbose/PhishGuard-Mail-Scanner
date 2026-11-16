@@ -1,0 +1,668 @@
+{
+  "case_id": "case_6de2d9dcdd16",
+  "title": "Action required: confirm your account details now",
+  "status": "open",
+  "automated_verdict": "Critical",
+  "analyst_verdict": null,
+  "risk_score": 90,
+  "evidence": [
+    {
+      "evidence_id": "ev_5f9e7c553ae2",
+      "kind": "raw_email",
+      "name": "samples\\phishing_with_auth_fail.eml",
+      "sha256": "b5f67cd186e80d519c0b4a803652028ff5e828e0f4ad33e57d9eb5804d4f56d9",
+      "size": 1009,
+      "source": "samples\\phishing_with_auth_fail.eml",
+      "created_at": "2026-11-16T20:21:28+00:00",
+      "metadata": {
+        "parser_source": "samples\\phishing_with_auth_fail.eml"
+      }
+    }
+  ],
+  "observables": [
+    {
+      "obs_type": "url",
+      "value": "https://paypa1-secure.com.login.verify-user.top/signin",
+      "normalized": "https://paypa1-secure.com.login.verify-user.top/signin",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "domain",
+      "value": "paypa1-secure.com",
+      "normalized": "paypa1-secure.com",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "domain",
+      "value": "account-check.xyz",
+      "normalized": "account-check.xyz",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "domain",
+      "value": "example.com",
+      "normalized": "example.com",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "domain",
+      "value": "malicious-relay.top",
+      "normalized": "malicious-relay.top",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "domain",
+      "value": "paypa1-secure.com.login.verify-user.top",
+      "normalized": "paypa1-secure.com.login.verify-user.top",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "email",
+      "value": "service@paypa1-secure.com",
+      "normalized": "service@paypa1-secure.com",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "email",
+      "value": "support@account-check.xyz",
+      "normalized": "support@account-check.xyz",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "email",
+      "value": "victim@example.com",
+      "normalized": "victim@example.com",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    },
+    {
+      "obs_type": "email",
+      "value": "bounce@malicious-relay.top",
+      "normalized": "bounce@malicious-relay.top",
+      "source": "scan_result",
+      "tags": [],
+      "whitelisted": false,
+      "provenance": {}
+    }
+  ],
+  "analyzer_results": [
+    {
+      "analyzer_id": "phishguard.local_heuristic_ml",
+      "name": "PhishGuard Local Heuristic+ML",
+      "status": "succeeded",
+      "severity": "malicious",
+      "confidence": 0.9999,
+      "summary": "Detected 14 indicator(s). Top signals: Credential or sensitive-info request; Reply-To domain mismatch; DMARC check did not pass (header claim). ML: phishing (100% phishing likelihood).",
+      "findings": [
+        {
+          "severity": "High",
+          "title": "Credential or sensitive-info request",
+          "detail": "Message appears to request login, verification, or sensitive information.",
+          "score": 12,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "High",
+          "title": "Reply-To domain mismatch",
+          "detail": "From domain 'paypa1-secure.com' differs from Reply-To domain 'account-check.xyz'.",
+          "score": 12,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "High",
+          "title": "DMARC check did not pass (header claim)",
+          "detail": "Authentication result header indicates dmarc=fail.",
+          "score": 10,
+          "evidence": "dmarc=fail",
+          "reasoning": "Header-reported authentication failures can indicate spoofing, but may also result from forwarding/misconfiguration; headers themselves are not independently verified here.",
+          "recommended_action": "Correlate with trusted mail infrastructure logs and other spoofing indicators before concluding."
+        },
+        {
+          "severity": "High",
+          "title": "SPF check did not pass (header claim)",
+          "detail": "Authentication result header indicates spf=fail.",
+          "score": 10,
+          "evidence": "spf=fail",
+          "reasoning": "Header-reported authentication failures can indicate spoofing, but may also result from forwarding/misconfiguration; headers themselves are not independently verified here.",
+          "recommended_action": "Correlate with trusted mail infrastructure logs and other spoofing indicators before concluding."
+        },
+        {
+          "severity": "Medium",
+          "title": "Possible display-name impersonation",
+          "detail": "Display name 'PayPal Security' references 'paypal' but sender domain is 'paypa1-secure.com'.",
+          "score": 8,
+          "evidence": "PayPal Security <service@paypa1-secure.com>",
+          "reasoning": "Brand names in display names can be abused to impersonate trusted organizations when the sender domain is unrelated.",
+          "recommended_action": "Verify the sender via official channels and inspect the actual From address/domain."
+        },
+        {
+          "severity": "Medium",
+          "title": "Urgency/pressure language",
+          "detail": "Message uses urgency or fear-based pressure tactics.",
+          "score": 8,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "Medium",
+          "title": "Link + credential request",
+          "detail": "Message combines links with credential/verification requests, a common phishing pattern.",
+          "score": 6,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "Medium",
+          "title": "Suspicious TLD",
+          "detail": "Link uses higher-risk TLD '.top': https://paypa1-secure.com.login.verify-user.top/signin",
+          "score": 6,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "Medium",
+          "title": "Complex/long domain",
+          "detail": "Link has an unusually complex host: paypa1-secure.com.login.verify-user.top",
+          "score": 5,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "Medium",
+          "title": "Return-Path domain mismatch",
+          "detail": "Return-Path domain 'malicious-relay.top' differs from From domain 'paypa1-secure.com'.",
+          "score": 5,
+          "evidence": "<bounce@malicious-relay.top>",
+          "reasoning": "Envelope sender and visible From domain differ; this can occur in legitimate forwarding/services but is also common in spoofing.",
+          "recommended_action": "Check alignment with SPF/DMARC context and sender legitimacy."
+        },
+        {
+          "severity": "Medium",
+          "title": "Sensitive-action URL path/query",
+          "detail": "URL path/query contains sensitive action keywords: https://paypa1-secure.com.login.verify-user.top/signin",
+          "score": 4,
+          "evidence": "",
+          "reasoning": "Legitimate services use such paths, but combined with other signals this can indicate credential harvesting.",
+          "recommended_action": "Confirm the destination is the official site before entering information."
+        },
+        {
+          "severity": "Low",
+          "title": "Generic greeting",
+          "detail": "Message uses a generic greeting instead of a personalized name.",
+          "score": 3,
+          "evidence": "",
+          "reasoning": "",
+          "recommended_action": ""
+        },
+        {
+          "severity": "Low",
+          "title": "DKIM result is none (header claim)",
+          "detail": "Authentication result header indicates dkim=none; sender domain may lack alignment/configuration.",
+          "score": 1,
+          "evidence": "dkim=none",
+          "reasoning": "A 'none' result is weak evidence and common in some setups; it is not proof of phishing.",
+          "recommended_action": "Use as context only; prioritize stronger indicators."
+        },
+        {
+          "severity": "Low",
+          "title": "Authentication headers are unverified claims",
+          "detail": "SPF/DKIM/DMARC values are parsed from message headers (e.g. Authentication-Results/Received-SPF) and are not cryptographically or externally verified by this tool.",
+          "score": 0,
+          "evidence": "Authentication-Results: mx.victim.com; spf=fail smtp.mailfrom=malicious-relay.top; dkim=none; dmarc=fail action=quarantine header.from=paypa1-secure.com",
+          "reasoning": "Authentication headers can be informative but may be forged or misinterpreted outside the receiving mail infrastructure.",
+          "recommended_action": "Treat header-reported auth results as hints; verify with trusted mail gateway/server-side logs when possible."
+        }
+      ],
+      "observables": [],
+      "raw": {
+        "verdict": "Critical",
+        "score": 90,
+        "summary": "Detected 14 indicator(s). Top signals: Credential or sensitive-info request; Reply-To domain mismatch; DMARC check did not pass (header claim). ML: phishing (100% phishing likelihood).",
+        "source": "samples\\phishing_with_auth_fail.eml",
+        "urls": [
+          "https://paypa1-secure.com.login.verify-user.top/signin"
+        ],
+        "findings": [
+          {
+            "severity": "High",
+            "title": "Credential or sensitive-info request",
+            "detail": "Message appears to request login, verification, or sensitive information.",
+            "score": 12,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "High",
+            "title": "Reply-To domain mismatch",
+            "detail": "From domain 'paypa1-secure.com' differs from Reply-To domain 'account-check.xyz'.",
+            "score": 12,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "High",
+            "title": "DMARC check did not pass (header claim)",
+            "detail": "Authentication result header indicates dmarc=fail.",
+            "score": 10,
+            "evidence": "dmarc=fail",
+            "reasoning": "Header-reported authentication failures can indicate spoofing, but may also result from forwarding/misconfiguration; headers themselves are not independently verified here.",
+            "recommended_action": "Correlate with trusted mail infrastructure logs and other spoofing indicators before concluding."
+          },
+          {
+            "severity": "High",
+            "title": "SPF check did not pass (header claim)",
+            "detail": "Authentication result header indicates spf=fail.",
+            "score": 10,
+            "evidence": "spf=fail",
+            "reasoning": "Header-reported authentication failures can indicate spoofing, but may also result from forwarding/misconfiguration; headers themselves are not independently verified here.",
+            "recommended_action": "Correlate with trusted mail infrastructure logs and other spoofing indicators before concluding."
+          },
+          {
+            "severity": "Medium",
+            "title": "Possible display-name impersonation",
+            "detail": "Display name 'PayPal Security' references 'paypal' but sender domain is 'paypa1-secure.com'.",
+            "score": 8,
+            "evidence": "PayPal Security <service@paypa1-secure.com>",
+            "reasoning": "Brand names in display names can be abused to impersonate trusted organizations when the sender domain is unrelated.",
+            "recommended_action": "Verify the sender via official channels and inspect the actual From address/domain."
+          },
+          {
+            "severity": "Medium",
+            "title": "Urgency/pressure language",
+            "detail": "Message uses urgency or fear-based pressure tactics.",
+            "score": 8,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "Medium",
+            "title": "Link + credential request",
+            "detail": "Message combines links with credential/verification requests, a common phishing pattern.",
+            "score": 6,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "Medium",
+            "title": "Suspicious TLD",
+            "detail": "Link uses higher-risk TLD '.top': https://paypa1-secure.com.login.verify-user.top/signin",
+            "score": 6,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "Medium",
+            "title": "Complex/long domain",
+            "detail": "Link has an unusually complex host: paypa1-secure.com.login.verify-user.top",
+            "score": 5,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "Medium",
+            "title": "Return-Path domain mismatch",
+            "detail": "Return-Path domain 'malicious-relay.top' differs from From domain 'paypa1-secure.com'.",
+            "score": 5,
+            "evidence": "<bounce@malicious-relay.top>",
+            "reasoning": "Envelope sender and visible From domain differ; this can occur in legitimate forwarding/services but is also common in spoofing.",
+            "recommended_action": "Check alignment with SPF/DMARC context and sender legitimacy."
+          },
+          {
+            "severity": "Medium",
+            "title": "Sensitive-action URL path/query",
+            "detail": "URL path/query contains sensitive action keywords: https://paypa1-secure.com.login.verify-user.top/signin",
+            "score": 4,
+            "evidence": "",
+            "reasoning": "Legitimate services use such paths, but combined with other signals this can indicate credential harvesting.",
+            "recommended_action": "Confirm the destination is the official site before entering information."
+          },
+          {
+            "severity": "Low",
+            "title": "Generic greeting",
+            "detail": "Message uses a generic greeting instead of a personalized name.",
+            "score": 3,
+            "evidence": "",
+            "reasoning": "",
+            "recommended_action": ""
+          },
+          {
+            "severity": "Low",
+            "title": "DKIM result is none (header claim)",
+            "detail": "Authentication result header indicates dkim=none; sender domain may lack alignment/configuration.",
+            "score": 1,
+            "evidence": "dkim=none",
+            "reasoning": "A 'none' result is weak evidence and common in some setups; it is not proof of phishing.",
+            "recommended_action": "Use as context only; prioritize stronger indicators."
+          },
+          {
+            "severity": "Low",
+            "title": "Authentication headers are unverified claims",
+            "detail": "SPF/DKIM/DMARC values are parsed from message headers (e.g. Authentication-Results/Received-SPF) and are not cryptographically or externally verified by this tool.",
+            "score": 0,
+            "evidence": "Authentication-Results: mx.victim.com; spf=fail smtp.mailfrom=malicious-relay.top; dkim=none; dmarc=fail action=quarantine header.from=paypa1-secure.com",
+            "reasoning": "Authentication headers can be informative but may be forged or misinterpreted outside the receiving mail infrastructure.",
+            "recommended_action": "Treat header-reported auth results as hints; verify with trusted mail gateway/server-side logs when possible."
+          }
+        ],
+        "metadata": {
+          "subject": "Action required: confirm your account details now",
+          "from": "PayPal Security <service@paypa1-secure.com>",
+          "reply_to": "support@account-check.xyz",
+          "to": "victim@example.com",
+          "date": "Mon, 16 Nov 2026 10:22:11 +0000",
+          "message_id": "<fake-12345@paypa1-secure.com>",
+          "return_path": "<bounce@malicious-relay.top>",
+          "received_count": 2,
+          "attachment_count": 0,
+          "attachments": [],
+          "url_count": 1,
+          "all_url_count": 1,
+          "ml_enabled": true,
+          "whitelist_path": "C:\\Users\\boser\\Downloads\\PhishGuard-Mail-Scanner\\whitelist.json",
+          "whitelist_applied": true
+        },
+        "auth_analysis": {
+          "spf": "fail",
+          "dkim": "none",
+          "dmarc": "fail",
+          "sources": [
+            "Authentication-Results: mx.victim.com; spf=fail smtp.mailfrom=malicious-relay.top; dkim=none; dmarc=fail action=quarantine header.from=paypa1-secure.com"
+          ]
+        },
+        "observables": {
+          "urls": [
+            "https://paypa1-secure.com.login.verify-user.top/signin"
+          ],
+          "emails": [
+            "service@paypa1-secure.com",
+            "support@account-check.xyz",
+            "victim@example.com",
+            "bounce@malicious-relay.top"
+          ],
+          "ips": [],
+          "domains": [
+            "paypa1-secure.com",
+            "account-check.xyz",
+            "example.com",
+            "malicious-relay.top",
+            "paypa1-secure.com.login.verify-user.top"
+          ],
+          "whitelisted": {
+            "urls": [],
+            "emails": [],
+            "ips": [],
+            "domains": []
+          }
+        },
+        "whitelist_applied": true,
+        "ml_analysis": {
+          "label": "phishing",
+          "phishing_probability": 1.0,
+          "legitimate_probability": 0.0,
+          "confidence": 0.9999,
+          "top_indicators": [
+            "account",
+            "confirm",
+            "now",
+            "password",
+            "security",
+            "details",
+            "will",
+            "unusual"
+          ],
+          "model": "Multinomial Naive Bayes (lightweight, embedded corpus)"
+        },
+        "category_scores": {
+          "header_identity": 0,
+          "authentication": 21,
+          "url": 46,
+          "content": 23,
+          "attachment": 0,
+          "other": 0
+        },
+        "recommendations": [
+          "Do not click links, open attachments, or reply. Report this message to your security/IT team or email provider.",
+          "Authentication headers indicate failures (unverified header claims); treat sender identity with extra skepticism.",
+          "Never enter passwords, OTPs, or recovery codes from an email link; navigate to the official site/app directly.",
+          "Inspect link destinations without clicking (hover/status bar) and prefer typed or bookmarked official addresses."
+        ],
+        "security_assessment": {
+          "cvss_estimate": {
+            "type": "triage_estimate",
+            "version": "3.1",
+            "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+            "base_score": 8.6,
+            "severity": "High",
+            "note": "Estimated triage severity derived from phishing indicators; not a confirmed software vulnerability CVSS."
+          },
+          "mitre_attack": [
+            {
+              "id": "T1566",
+              "name": "Phishing",
+              "tactic": "Initial Access",
+              "url": "https://attack.mitre.org/techniques/T1566/"
+            },
+            {
+              "id": "T1566.002",
+              "name": "Spearphishing Link",
+              "tactic": "Initial Access",
+              "url": "https://attack.mitre.org/techniques/T1566/002/"
+            },
+            {
+              "id": "T1598",
+              "name": "Phishing for Information",
+              "tactic": "Reconnaissance",
+              "url": "https://attack.mitre.org/techniques/T1598/"
+            }
+          ],
+          "cwe": [
+            {
+              "id": "CWE-290",
+              "name": "Authentication Bypass by Spoofing",
+              "url": "https://cwe.mitre.org/data/definitions/290.html"
+            },
+            {
+              "id": "CWE-451",
+              "name": "User Interface (UI) Misrepresentation of Critical Information",
+              "url": "https://cwe.mitre.org/data/definitions/451.html"
+            },
+            {
+              "id": "CWE-346",
+              "name": "Origin Validation Error",
+              "url": "https://cwe.mitre.org/data/definitions/346.html"
+            },
+            {
+              "id": "CWE-601",
+              "name": "URL Redirection to Untrusted Site ('Open Redirect')",
+              "url": "https://cwe.mitre.org/data/definitions/601.html"
+            },
+            {
+              "id": "CWE-1390",
+              "name": "Weak Authentication",
+              "url": "https://cwe.mitre.org/data/definitions/1390.html"
+            },
+            {
+              "id": "CWE-358",
+              "name": "Improperly Implemented Security Check for Standard",
+              "url": "https://cwe.mitre.org/data/definitions/358.html"
+            }
+          ],
+          "cve_references": [],
+          "notes": [
+            "MITRE ATT&CK and CWE mappings are evidence-linked heuristics for analyst context.",
+            "CVEs are product/version-specific and are not auto-attributed from email content; use external vulnerability intelligence for affected products if relevant."
+          ]
+        }
+      },
+      "started_at": "2026-11-16T20:21:28+00:00",
+      "finished_at": "2026-11-16T20:21:28+00:00",
+      "error": null
+    }
+  ],
+  "timeline": [
+    {
+      "event_id": "evt_d927c6debd6b",
+      "timestamp": "2026-11-16T20:21:28+00:00",
+      "event_type": "scan_imported",
+      "message": "Imported existing PhishGuard scan result",
+      "actor": "system",
+      "data": {
+        "source": "samples\\phishing_with_auth_fail.eml",
+        "verdict": "Critical",
+        "score": 90
+      }
+    }
+  ],
+  "notes": [],
+  "created_at": "2026-11-16T20:21:28+00:00",
+  "updated_at": "2026-11-16T20:21:28+00:00",
+  "metadata": {
+    "source": "samples\\phishing_with_auth_fail.eml",
+    "auth_analysis": {
+      "spf": "fail",
+      "dkim": "none",
+      "dmarc": "fail",
+      "sources": [
+        "Authentication-Results: mx.victim.com; spf=fail smtp.mailfrom=malicious-relay.top; dkim=none; dmarc=fail action=quarantine header.from=paypa1-secure.com"
+      ]
+    },
+    "ml_analysis": {
+      "label": "phishing",
+      "phishing_probability": 1.0,
+      "legitimate_probability": 0.0,
+      "confidence": 0.9999,
+      "top_indicators": [
+        "account",
+        "confirm",
+        "now",
+        "password",
+        "security",
+        "details",
+        "will",
+        "unusual"
+      ],
+      "model": "Multinomial Naive Bayes (lightweight, embedded corpus)"
+    },
+    "category_scores": {
+      "header_identity": 0,
+      "authentication": 21,
+      "url": 46,
+      "content": 23,
+      "attachment": 0,
+      "other": 0
+    },
+    "recommendations": [
+      "Do not click links, open attachments, or reply. Report this message to your security/IT team or email provider.",
+      "Authentication headers indicate failures (unverified header claims); treat sender identity with extra skepticism.",
+      "Never enter passwords, OTPs, or recovery codes from an email link; navigate to the official site/app directly.",
+      "Inspect link destinations without clicking (hover/status bar) and prefer typed or bookmarked official addresses."
+    ],
+    "security_assessment": {
+      "cvss_estimate": {
+        "type": "triage_estimate",
+        "version": "3.1",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "base_score": 8.6,
+        "severity": "High",
+        "note": "Estimated triage severity derived from phishing indicators; not a confirmed software vulnerability CVSS."
+      },
+      "mitre_attack": [
+        {
+          "id": "T1566",
+          "name": "Phishing",
+          "tactic": "Initial Access",
+          "url": "https://attack.mitre.org/techniques/T1566/"
+        },
+        {
+          "id": "T1566.002",
+          "name": "Spearphishing Link",
+          "tactic": "Initial Access",
+          "url": "https://attack.mitre.org/techniques/T1566/002/"
+        },
+        {
+          "id": "T1598",
+          "name": "Phishing for Information",
+          "tactic": "Reconnaissance",
+          "url": "https://attack.mitre.org/techniques/T1598/"
+        }
+      ],
+      "cwe": [
+        {
+          "id": "CWE-290",
+          "name": "Authentication Bypass by Spoofing",
+          "url": "https://cwe.mitre.org/data/definitions/290.html"
+        },
+        {
+          "id": "CWE-451",
+          "name": "User Interface (UI) Misrepresentation of Critical Information",
+          "url": "https://cwe.mitre.org/data/definitions/451.html"
+        },
+        {
+          "id": "CWE-346",
+          "name": "Origin Validation Error",
+          "url": "https://cwe.mitre.org/data/definitions/346.html"
+        },
+        {
+          "id": "CWE-601",
+          "name": "URL Redirection to Untrusted Site ('Open Redirect')",
+          "url": "https://cwe.mitre.org/data/definitions/601.html"
+        },
+        {
+          "id": "CWE-1390",
+          "name": "Weak Authentication",
+          "url": "https://cwe.mitre.org/data/definitions/1390.html"
+        },
+        {
+          "id": "CWE-358",
+          "name": "Improperly Implemented Security Check for Standard",
+          "url": "https://cwe.mitre.org/data/definitions/358.html"
+        }
+      ],
+      "cve_references": [],
+      "notes": [
+        "MITRE ATT&CK and CWE mappings are evidence-linked heuristics for analyst context.",
+        "CVEs are product/version-specific and are not auto-attributed from email content; use external vulnerability intelligence for affected products if relevant."
+      ]
+    }
+  }
+}

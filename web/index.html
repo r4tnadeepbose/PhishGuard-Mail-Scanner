@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhishGuard Mail Scanner</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.42.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app" id="appRoot">
+    <div class="topbar">
+      <div class="logo"><i class="ti ti-shield-check" aria-hidden="true"></i> PhishGuard</div>
+      <div class="tb-sep"></div>
+      <button class="tb-btn primary" id="btnPasteScan" title="Paste clipboard & scan"><i class="ti ti-clipboard-text"></i> Paste &amp; scan</button>
+      <button class="tb-btn" id="btnOpenFile" title="Open file (Ctrl+O)"><i class="ti ti-folder-open"></i> Open file</button>
+      <input type="file" id="fileInput" accept=".eml,.txt,.mail" multiple style="display:none">
+      <div class="tb-sep"></div>
+      <select class="sample-sel" id="sampleSelect" title="Sample emails"></select>
+      <button class="tb-btn" id="btnLoadSample" title="Load selected sample"><i class="ti ti-player-play"></i> Load</button>
+      <button class="tb-btn" id="btnScanAllSamples" title="Scan all samples (batch)"><i class="ti ti-stack-2"></i> Scan samples</button>
+      <button class="tb-btn" id="btnRescan" title="Rescan current source"><i class="ti ti-refresh"></i> Rescan</button>
+      <label class="ml-badge" title="Toggle ML signal"><input type="checkbox" id="mlToggle" checked> <i class="ti ti-sparkles"></i> ML</label>
+      <div class="spacer"></div>
+      <button class="export-btn" id="btnExportJson" title="Export scan JSON"><i class="ti ti-file-export"></i> JSON</button>
+      <button class="export-btn" id="btnExportHtml" title="Export scan HTML"><i class="ti ti-file-code"></i> HTML</button>
+      <button class="export-btn" id="btnCopySummary" title="Copy summary"><i class="ti ti-copy"></i> Copy</button>
+      <button class="export-btn" id="btnCopyMarkdown" title="Copy Markdown report"><i class="ti ti-markdown"></i> MD</button>
+      <button class="export-btn" id="btnHelp" title="How to use / Help"><i class="ti ti-help-circle"></i> Help</button>
+      <button class="export-btn" id="btnDarkMode" title="Toggle dark mode"><i class="ti ti-moon"></i></button>
+    </div>
+
+    <div class="body">
+      <div class="sidebar">
+        <div class="sidebar-sec">Navigation</div>
+        <div class="nav-item active" data-view="scan"><i class="ti ti-scan"></i> Scan &amp; report</div>
+        <div class="nav-item" data-view="details"><i class="ti ti-file-description"></i> Details &amp; case</div>
+        <div class="nav-item" data-view="findings"><i class="ti ti-alert-triangle"></i> Findings</div>
+        <div class="nav-item" data-view="observables"><i class="ti ti-eye"></i> Observables</div>
+        <div class="nav-item" data-view="source"><i class="ti ti-code"></i> Source</div>
+        <div class="nav-item" data-view="history"><i class="ti ti-history"></i> History &amp; export</div>
+        <div class="nav-item" data-view="batch"><i class="ti ti-stack-2"></i> Batch scan</div>
+        <div class="nav-item" data-view="tools"><i class="ti ti-tools"></i> Tools</div>
+        <div class="nav-item" data-view="help"><i class="ti ti-help-circle"></i> How to use / Help</div>
+
+        <div style="flex:1"></div>
+
+        <div class="wl-box">
+          <div class="wl-title"><i class="ti ti-list-check"></i> Whitelist</div>
+          <div class="wl-val" id="whitelistStatus">default whitelist.json</div>
+          <div style="display:flex;gap:6px;">
+            <button class="wl-btn" id="btnWhitelistInfo" style="flex:1">Refresh</button>
+            <button class="wl-btn" id="btnWhitelistValidate" style="flex:1">Validate</button>
+          </div>
+        </div>
+
+        <div class="safety-box">
+          <div class="safety-title"><i class="ti ti-lock"></i> Local only</div>
+          <div class="safety-text">No links opened. No attachments executed. Auth headers are unverified claims.</div>
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="email-panel">
+          <div class="ep-header">
+            <div class="ep-meta">
+              <div class="ep-from" id="epRoute">-- → --</div>
+              <div class="ep-sub" id="epSubject">(No message loaded)</div>
+              <div class="ep-date" id="epDate">--</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div class="verdict-pill" id="verdictPill"><i class="ti ti-shield"></i> <span id="verdictPillText">No scan</span></div>
+            </div>
+          </div>
+
+          <div class="score-bar-wrap">
+            <span class="score-label" style="font-size:10px">Risk score</span>
+            <div class="score-bar"><div class="score-fill" id="riskBarFill" style="width:0%"></div></div>
+            <span class="score-num" id="riskBarNum">-- / 100</span>
+          </div>
+
+          <div class="auth-row" id="authRow">
+            <span class="auth-badge auth-warn" id="badgeSpf"><i class="ti ti-minus"></i> SPF --</span>
+            <span class="auth-badge auth-warn" id="badgeDkim"><i class="ti ti-minus"></i> DKIM --</span>
+            <span class="auth-badge auth-warn" id="badgeDmarc"><i class="ti ti-minus"></i> DMARC --</span>
+            <span class="auth-badge" id="badgeAttach"><i class="ti ti-paperclip"></i> 0 attachments</span>
+            <span class="auth-badge" id="badgeMl"><i class="ti ti-sparkles"></i> ML --</span>
+          </div>
+
+          <div class="tabs" id="emailTabs">
+            <div class="tab active" data-tab="findings">Findings</div>
+            <div class="tab" data-tab="observables">Observables</div>
+            <div class="tab" data-tab="source">Source</div>
+            <div class="tab" data-tab="message">Message body</div>
+            <div class="tab" data-tab="activity">Activity</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="findings-panel" id="panel-findings">
+            <div class="panel-head">
+              <div class="fp-title" id="findingsTitle"><i class="ti ti-alert-triangle"></i> 0 findings</div>
+              <div class="panel-tools">
+                <input id="findingsSearch" class="mini-input" placeholder="Filter findings...">
+                <select id="findingsSeverity" class="mini-select">
+                  <option value="">All severities</option>
+                  <option value="critical">Critical/High</option>
+                  <option value="medium">Medium/Suspicious</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+            </div>
+            <div id="findingsList" class="empty-hint"><i class="ti ti-scan"></i>Paste an email and scan to see findings.</div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-observables">
+            <div class="panel-head">
+              <div class="fp-title"><i class="ti ti-eye"></i> Observables</div>
+              <div class="panel-tools">
+                <label class="mini-check"><input type="checkbox" id="defangToggle"> Defang URLs</label>
+                <button class="mini-btn" id="btnCopyAllObs">Copy all</button>
+              </div>
+            </div>
+            <div id="observablesList" class="empty-hint">No observables yet.</div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-source">
+            <div class="panel-head">
+              <div class="fp-title"><i class="ti ti-code"></i> Raw source</div>
+              <div class="panel-tools">
+                <button class="mini-btn" id="btnCopySource">Copy source</button>
+                <button class="mini-btn" id="btnPasteIntoSource">Paste</button>
+              </div>
+            </div>
+            <textarea id="sourceInput" class="source-input" placeholder="Paste raw email source (Gmail 'Show original') here, or drop a .eml/.txt file..." spellcheck="false"></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="action-btn report" id="btnScanSource" style="width:auto;padding:7px 14px;"><i class="ti ti-scan"></i> Scan source</button>
+              <button class="action-btn" id="btnClearSource" style="width:auto;padding:7px 14px;">Clear</button>
+              <button class="action-btn" id="btnSourceStats" style="width:auto;padding:7px 14px;">Source stats</button>
+              <span class="hint-inline">Shortcuts: Ctrl+Enter scan, Ctrl+O open, Ctrl+B scan samples, drag & drop files</span>
+            </div>
+            <div id="sourceStatsBox" class="tool-card hidden" style="margin-top:10px"></div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-message">
+            <div class="panel-head">
+              <div class="fp-title"><i class="ti ti-mail"></i> Message body</div>
+              <div class="panel-tools"><button class="mini-btn" id="btnCopyBody">Copy body</button></div>
+            </div>
+            <pre id="messageBody" class="message-body">(No message loaded)</pre>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-activity">
+            <div class="panel-head">
+              <div class="fp-title"><i class="ti ti-activity"></i> Activity</div>
+              <div class="panel-tools"><button class="mini-btn" id="btnClearLog">Clear</button></div>
+            </div>
+            <pre id="activityLog" class="message-body">Ready.</pre>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-details">
+            <div class="fp-title"><i class="ti ti-file-description"></i> Details &amp; case</div>
+            <div id="detailsView" class="empty-hint">No scan yet.</div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-history">
+            <div class="panel-head">
+              <div class="fp-title"><i class="ti ti-history"></i> History &amp; export</div>
+              <div class="panel-tools">
+                <input id="historySearch" class="mini-input" placeholder="Filter history...">
+                <button class="mini-btn" id="btnExportHistory">Export all</button>
+                <button class="mini-btn" id="btnClearHistory">Clear history</button>
+              </div>
+            </div>
+            <div id="historyStats" class="tool-card" style="margin-bottom:10px"></div>
+            <div id="historyView" class="empty-hint">No scans in this session yet.</div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-batch">
+            <div class="fp-title"><i class="ti ti-stack-2"></i> Batch scan</div>
+            <div class="tool-card">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+                <button class="action-btn report" id="btnBatchSamples" style="width:auto;padding:7px 14px;"><i class="ti ti-player-play"></i> Scan all samples</button>
+                <button class="action-btn" id="btnBatchFiles" style="width:auto;padding:7px 14px;"><i class="ti ti-files"></i> Scan selected files</button>
+                <input type="file" id="batchFileInput" accept=".eml,.txt,.mail" multiple style="display:none">
+                <button class="action-btn" id="btnBatchExportJson" style="width:auto;padding:7px 14px;">Export batch JSON</button>
+                <button class="action-btn" id="btnBatchExportHtml" style="width:auto;padding:7px 14px;">Export batch HTML</button>
+              </div>
+              <div id="batchStatus" class="hint-inline">Scan multiple emails locally. Results can be loaded into the main view.</div>
+            </div>
+            <div id="batchResults"></div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-tools">
+            <div class="fp-title"><i class="ti ti-tools"></i> Tools</div>
+            <div class="tool-card">
+              <h4>CVSS v3.1 Base Score Calculator (offline)</h4>
+              <p class="hint-inline">Example: <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N</code></p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+                <input id="cvssInput" class="mini-input" style="flex:1;min-width:280px" placeholder="Paste CVSS:3.1 vector...">
+                <button class="action-btn" id="btnCalcCvss" style="width:auto;padding:7px 14px;">Calculate</button>
+              </div>
+              <pre id="cvssOutput" class="message-body" style="min-height:80px;margin-top:8px;">Enter a vector to calculate.</pre>
+            </div>
+            <div class="tool-card">
+              <h4>Defang / Refang</h4>
+              <textarea id="defangInput" class="source-input" style="min-height:90px" placeholder="Text, URL, domain, or email..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                <button class="action-btn" id="btnDefang" style="width:auto;padding:7px 14px;">Defang</button>
+                <button class="action-btn" id="btnRefang" style="width:auto;padding:7px 14px;">Refang</button>
+                <button class="action-btn" id="btnCopyDefang" style="width:auto;padding:7px 14px;">Copy output</button>
+              </div>
+              <pre id="defangOutput" class="message-body" style="min-height:70px;margin-top:8px;"></pre>
+            </div>
+            <div class="tool-card">
+              <h4>Base64 Encode / Decode (local)</h4>
+              <textarea id="b64Input" class="source-input" style="min-height:90px" placeholder="Text or base64..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                <button class="action-btn" id="btnB64Encode" style="width:auto;padding:7px 14px;">Encode UTF-8 → Base64</button>
+                <button class="action-btn" id="btnB64Decode" style="width:auto;padding:7px 14px;">Decode Base64 → UTF-8</button>
+                <button class="action-btn" id="btnCopyB64" style="width:auto;padding:7px 14px;">Copy output</button>
+              </div>
+              <pre id="b64Output" class="message-body" style="min-height:70px;margin-top:8px;"></pre>
+            </div>
+            <div class="tool-card">
+              <h4>SHA-256 Hash (local)</h4>
+              <p class="hint-inline">Hash any text or use the current email source for quick evidence fingerprinting.</p>
+              <textarea id="hashInput" class="source-input" style="min-height:90px" placeholder="Text to hash (or leave empty to use current source)..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                <button class="action-btn" id="btnHashText" style="width:auto;padding:7px 14px;">Hash input</button>
+                <button class="action-btn" id="btnHashSource" style="width:auto;padding:7px 14px;">Hash current source</button>
+                <button class="action-btn" id="btnCopyHash" style="width:auto;padding:7px 14px;">Copy hash</button>
+              </div>
+              <pre id="hashOutput" class="message-body" style="min-height:60px;margin-top:8px;"></pre>
+            </div>
+            <div class="tool-card">
+              <h4>Quick IOC extractor (local)</h4>
+              <p class="hint-inline">Extract URLs, emails, IPv4s, and domains from any text/source without running a full scan.</p>
+              <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                <button class="action-btn" id="btnExtractFromSource" style="width:auto;padding:7px 14px;">Extract from current source</button>
+                <button class="action-btn" id="btnCopyIocs" style="width:auto;padding:7px 14px;">Copy IOCs</button>
+              </div>
+              <pre id="iocOutput" class="message-body" style="min-height:120px;margin-top:8px;">No IOCs extracted yet.</pre>
+            </div>
+          </div>
+
+          <div class="findings-panel hidden" id="panel-help">
+            <div class="fp-title"><i class="ti ti-help-circle"></i> How to use PhishGuard (Help &amp; Guide)</div>
+            <div class="tool-card">
+              <h4><i class="ti ti-question-mark"></i> Quick start (Gmail “Show original” workflow)</h4>
+              <ol class="help-list">
+                <li>Open the suspicious email in Gmail.</li>
+                <li>Click <b>⋮ (More)</b> → <b>Show original</b>.</li>
+                <li>Click <b>Copy to clipboard</b> (or select all and copy the full raw message).</li>
+                <li>In PhishGuard, click <b>Paste &amp; scan</b> (top bar) or paste into <b>Source</b> and click <b>Scan source</b>.</li>
+                <li>Review the <b>verdict, risk score, findings, recommendations, observables, and security assessment</b>. Export JSON/HTML/case if needed.</li>
+              </ol>
+            </div>
+            <div class="tool-card">
+              <h4>Ways to load emails</h4>
+              <ul class="help-list">
+                <li><b>Paste &amp; scan:</b> scans raw email source from clipboard.</li>
+                <li><b>Open file / drag &amp; drop:</b> load <code>.eml</code>, <code>.txt</code>, or <code>.mail</code> files (single scan or batch for multiple).</li>
+                <li><b>Samples:</b> load or scan bundled sample emails to see how detection works.</li>
+                <li><b>Source tab:</b> manually paste/edit raw source, view stats, and scan.</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <h4>Understanding the results</h4>
+              <ul class="help-list">
+                <li><b>Risk score (0–100):</b> 0–19 Low Risk, 20–39 Suspicious, 40–69 High Risk, 70–100 Critical.</li>
+                <li><b>Verdict:</b> automated triage based on explainable heuristic signals (+ optional ML signal).</li>
+                <li><b>SPF/DKIM/DMARC badges:</b> parsed from headers as <b>unverified claims</b> (not independently validated by this tool).</li>
+                <li><b>Findings:</b> evidence-based indicators with severity and score contribution. Click a finding to copy it.</li>
+                <li><b>Observables:</b> extracted URLs/emails/IPs/domains (with defang/copy/whitelist actions).</li>
+                <li><b>Recommendations &amp; Security assessment:</b> suggested actions, MITRE ATT&CK/CWE hints, and triage CVSS estimate.</li>
+                <li><b>Details &amp; case:</b> metadata, evidence hash, timeline, and analyst verdict/notes (analyst decision is separate from automated verdict).</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <h4>Features &amp; tools</h4>
+              <ul class="help-list">
+                <li><b>History:</b> session history (persisted locally in browser), load/delete entries, filter, stats, export all.</li>
+                <li><b>Batch scan:</b> scan all samples or multiple files and export batch reports.</li>
+                <li><b>Tools:</b> CVSS calculator, defang/refang, Base64 encode/decode, SHA-256 hashing, quick IOC extraction.</li>
+                <li><b>Whitelist:</b> refresh/validate and add exact observables (reduces noise for known-safe items; use carefully).</li>
+                <li><b>Exports:</b> JSON/HTML scan reports, case JSON, batch JSON/HTML, Markdown/summary copy.</li>
+                <li><b>Rescan:</b> re-run analysis on the current source (useful after toggling ML or updating input).</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <h4>Keyboard shortcuts</h4>
+              <ul class="help-list">
+                <li><b>Ctrl/Cmd + Enter:</b> Scan current source</li>
+                <li><b>Ctrl/Cmd + O:</b> Open file picker</li>
+                <li><b>Ctrl/Cmd + B:</b> Scan all samples (batch)</li>
+                <li><b>Ctrl/Cmd + S:</b> Save/export current case JSON</li>
+                <li><b>Esc:</b> Clear status message</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <h4>Safety &amp; limitations (important)</h4>
+              <ul class="help-list">
+                <li><b>Local/offline-first:</b> analysis runs locally; no attachments are executed and links are not auto-opened.</li>
+                <li><b>Not foolproof:</b> phishing detection can have false positives/negatives. Compromised legitimate accounts and novel attacks may evade heuristics.</li>
+                <li><b>Auth headers are claims:</b> SPF/DKIM/DMARC shown in headers are not cryptographically verified by this app.</li>
+                <li><b>Verify independently:</b> for suspicious messages, confirm via official channels/out-of-band before taking action.</li>
+              </ul>
+            </div>
+            <div class="tool-card">
+              <h4>Troubleshooting</h4>
+              <ul class="help-list">
+                <li>If <b>Paste &amp; scan</b> can’t read clipboard, your browser may block clipboard access — paste into <b>Source</b> and click <b>Scan source</b>.</li>
+                <li>Ensure you copied the <b>full raw source</b> (“Show original”), not just rendered text, for best header/auth analysis.</li>
+                <li>If a sample/scan fails, check <b>Activity</b> for errors and confirm the server is running (<code>python server.py</code> / <code>run.py</code>).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sidebar2" id="summarySidebar">
+            <div style="font-size:11px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Summary</div>
+            <div class="stat-grid">
+              <div class="stat-card"><div class="stat-label">Risk score</div><div class="stat-val danger" id="statRisk">--</div></div>
+              <div class="stat-card"><div class="stat-label">Findings</div><div class="stat-val danger" id="statFindings">0</div></div>
+              <div class="stat-card"><div class="stat-label">Active URLs</div><div class="stat-val" id="statUrls">0</div></div>
+              <div class="stat-card"><div class="stat-label">Attachments</div><div class="stat-val" id="statAttach">0</div></div>
+            </div>
+            <div id="summaryExtra" class="summary-extra">No scan yet.</div>
+
+            <div style="font-size:11px;font-weight:500;color:var(--text-secondary);margin:10px 0 6px">Active URLs</div>
+            <div id="urlList"><div class="url-item"><div class="url-text">(no active URLs)</div></div></div>
+
+            <div style="margin-top:12px">
+              <button class="action-btn report" id="btnReportPhishing"><i class="ti ti-send"></i> Report as phishing</button>
+              <button class="action-btn" style="margin-top:4px" id="btnMarkBenign"><i class="ti ti-circle-check"></i> Mark benign</button>
+              <button class="action-btn" style="margin-top:4px" id="btnAddWhitelist"><i class="ti ti-shield-off"></i> Add selected URL to whitelist</button>
+              <button class="action-btn" style="margin-top:4px" id="btnSaveCase"><i class="ti ti-device-floppy"></i> Save case</button>
+            </div>
+            <div id="statusMsg" class="status-msg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dropOverlay" class="drop-overlay hidden"><div><i class="ti ti-upload"></i> Drop email file(s) to scan</div></div>
+  <script src="/app.js"></script>
+</body>
+</html>

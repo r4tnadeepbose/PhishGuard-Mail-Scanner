@@ -1,0 +1,23 @@
+From: "Microsoft Account Security" <security-alert@micros0ft-support.xyz>
+Reply-To: verify-team@secure-login-check.top
+To: user@example.com
+Subject: URGENT: Unusual sign-in detected - verify your account immediately
+Date: Mon, 16 Nov 2026 10:22:11 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+Dear Customer,
+
+We detected unusual sign-in activity on your Microsoft account. Your account will be suspended within 24 hours if you do not verify your identity immediately.
+
+Please verify your account now and confirm your password and security code:
+http://192.168.10.45/login/verify
+https://account-security.micros0ft-support.xyz@malicious-check.top/reset
+
+Failure to comply will result in permanent account closure.
+
+If you did not request this, sign in and update your billing information to secure your account.
+
+Sincerely,
+Microsoft Account Security Team
+Attachment: Account_Verification_Form.html

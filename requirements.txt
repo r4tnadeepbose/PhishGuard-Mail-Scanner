@@ -1,0 +1,8 @@
+# PhishGuard Mail Scanner
+# Core scanner uses Python standard library only (Python 3.9+ recommended).
+# Tkinter is required for gui.py and is usually bundled with Python on Windows.
+
+# Optional (future extensions):
+# requests>=2.31.0        # threat-intel/API lookups
+# scikit-learn>=1.3.0     # ML-based classification
+# pandas>=2.0.0           # dataset handling

@@ -4,6 +4,27 @@ PhishGuard is a local, explainable phishing-email triage tool for Windows/macOS/
 
 > **Security note:** PhishGuard is a fast triage aid, not a replacement for secure email gateways, MFA, sandboxing, server-side authentication verification, or incident-response processes. **No scanner can detect every phishing email or be impossible to trick** (e.g. compromised legitimate accounts, perfect domain/auth alignment, novel obfuscation, or context-only social engineering can evade detection).
 
+## Screenshots
+
+| Scan & report (web UI) | How to use / Help (❓ guide) |
+| --- | --- |
+| ![Scan & report](docs/screenshots/scan-report.png) | ![How to use / Help](docs/screenshots/help-guide.png) |
+
+| Observables & IOCs | Details & case |
+| --- | --- |
+| ![Observables](docs/screenshots/observables.png) | ![Details & case](docs/screenshots/details-case.png) |
+
+| Tools (CVSS, defang/refang, Base64, hash, IOC extract) | Batch scan | History & export |
+| --- | --- | --- |
+| ![Tools](docs/screenshots/tools.png) | ![Batch scan](docs/screenshots/batch.png) | ![History](docs/screenshots/history.png) |
+
+<details>
+<summary>Dark mode</summary>
+
+![Scan in dark mode](docs/screenshots/scan-dark.png)
+
+</details>
+
 ## What you get (full report)
 
 Each scan produces a defense-in-depth report with:
@@ -70,12 +91,16 @@ PhishGuard-Mail-Scanner/
 │  ├─ threat_framework.py # MITRE ATT&CK/CWE mappings and CVSS v3.1 calculator/triage estimate
 │  ├─ integrations/     # Provider contracts, registry, local case export, safe null providers
 │  └─ report.py         # JSON/HTML single and batch report rendering
+├─ web/                 # Web UI (index.html, app.js, style.css)
 ├─ samples/             # Example emails/fixtures (incl. Gmail "Show original" style)
 ├─ tests/               # Unit/integration tests
-├─ docs/                # Detection logic, research, feature registry, roadmap, examples
+├─ docs/                # Detection logic, research, roadmap, examples, screenshots
+├─ server.py            # Local web server + JSON API
+├─ run.py               # One-click web launcher (auto-opens browser)
+├─ run.bat              # Windows one-click launcher
 ├─ cli.py               # Command-line interface
 ├─ gui.py               # Tkinter desktop interface
-├─ main.py              # GUI entry point
+├─ main.py              # Entry point (GUI or --server)
 ├─ whitelist.json       # Default whitelist rules (optional)
 ├─ requirements.txt
 └─ README.md
@@ -89,10 +114,26 @@ PhishGuard-Mail-Scanner/
 
 ## Quick start
 
-### Run the GUI
+### Run the Web UI (recommended, includes in-app “How to use / Help”)
 
 ```powershell
 cd "$HOME\Downloads\PhishGuard-Mail-Scanner"
+# One-click (Windows)
+.\run.bat
+
+# Or
+python run.py
+# or
+python server.py
+# or
+python main.py --server
+```
+
+Open **http://127.0.0.1:8080/**. Use the **❓ Help / “How to use / Help”** panel for the Gmail “Show original” workflow, features, shortcuts, and safety notes.
+
+### Run the desktop GUI
+
+```powershell
 python main.py
 ```
 
